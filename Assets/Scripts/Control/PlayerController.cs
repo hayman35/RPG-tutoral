@@ -22,17 +22,17 @@ namespace RPG.Control
         private bool InteractWithCombat()
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
-            foreach (RaycastHit hit in hits)
-            {
-                CombatTarget target = hit.collider.gameObject.GetComponent<CombatTarget>();
-                if (target == null) continue;
-                
-                if (Input.GetMouseButtonDown(0))
+                foreach (RaycastHit hit in hits)
                 {
-                    fighter.Attack(target);
-                } 
-                return true;
-            }
+                    CombatTarget target = hit.collider.gameObject.GetComponent<CombatTarget>();
+                    if (!fighter.CanAttack(target)) continue;
+                
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        fighter.Attack(target);
+                    } 
+                    return true;
+                }
             return false;
         }
 
